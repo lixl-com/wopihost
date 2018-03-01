@@ -107,7 +107,18 @@ public class WopiHostContrller {
     @RequestMapping("/files/{name}")
     @ResponseBody
     public void getFileInfo(@PathVariable(name = "name") String name, HttpServletRequest request, HttpServletResponse response) {
-        String uri = request.getRequestURI();
+        /**
+         * 内置参数，其他名称接收不到
+         */
+        String access_token = request.getParameter("access_token");
+        System.err.println("access_token = "+access_token);
+        /**
+         * 可以进行文件读写权限控制
+         */
+        if(!"123".equals(access_token)){
+        	return;
+        }
+    	String uri = request.getRequestURI();
         FileInfo info = new FileInfo();
         try {
             // 获取文件名
@@ -117,7 +128,7 @@ public class WopiHostContrller {
                 File file = new File(path);
                 if (file.exists()) {
                     // 取得文件名
-                    info.setBaseFileName(file.getName());
+                    info.setBaseFileName("测试文档-"+file.getName());
                     info.setSize(file.length());
                     info.setOwnerId("admin");
                     info.setVersion(file.lastModified());
@@ -131,6 +142,9 @@ public class WopiHostContrller {
 
             ObjectMapper mapper = new ObjectMapper();
             String Json =  mapper.writeValueAsString(info);
+            //中文文件名称设置编码
+            response.setHeader("Content-type", "text/html;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
             response.getWriter().write(Json);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
