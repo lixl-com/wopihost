@@ -120,6 +120,7 @@ public class WopiHostContrller {
         }
     	String uri = request.getRequestURI();
         FileInfo info = new FileInfo();
+        info.setUserFriendlyName("李小龍");
         try {
             // 获取文件名
             String fileName = URLDecoder.decode(uri.substring(uri.indexOf("wopi/files/") + 11, uri.length()), "UTF-8");
@@ -132,11 +133,12 @@ public class WopiHostContrller {
                     info.setSize(file.length());
                     info.setOwnerId("admin");
                     info.setVersion(file.lastModified());
-                    info.setSha256(getHash256(file));
-                    info.setAllowExternalMarketplace(true);
+                    info.setSHA256(getHash256(file));
+                    //info.setAllowExternalMarketplace(true);
                     info.setUserCanWrite(true);
                     info.setSupportsUpdate(true);
                     info.setSupportsLocks(true);
+                    info.setSupportsFolders(true);
                 }
             }
 
