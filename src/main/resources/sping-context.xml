@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+
+	<!-- 扫描包下的annotation标记 Controller Service restController等 -->
+	<context:component-scan base-package="com.sysware.*" />
+	<!-- 自动配置项 -->
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	
+	<bean id="propertyConfigurer"    
+      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">    
+      <property name="location">    
+          <value>classpath:config.properties</value>    
+      </property>    
+	</bean> 
+	
+	<!-- 内容管理器配置 -->
+	<bean id="contentManager"
+		class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+		<property name="favorPathExtension" value="true" />
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="defaultContentType" value="text/html" />
+		<property name="useJaf" value="false" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+				<entry key="html" value="text/html" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+	</bean>
+	<!-- jsp视图解析器配置 主要设定ModelAndView 的前缀、后缀 -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+</beans>    

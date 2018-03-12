@@ -1,19 +1,14 @@
-package com.wopihost.entity;
+package com.sysware.wopiserver.entity;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.alibaba.fastjson.annotation.JSONField;
 
 public class FileInfo implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	@JsonProperty("HostRestUrl")
+	@JSONField(name = "HostRestUrl")
 	private String HostRestUrl;
 
-	@JsonIgnore
 	public String getHostRestUrl() {
 		return this.HostRestUrl;
 	}
@@ -22,10 +17,9 @@ public class FileInfo implements Serializable {
 		this.HostRestUrl = HostRestUrl;
 	}
 
-	@JsonProperty("RestrictedWebViewOnly")
+	@JSONField(name = "RestrictedWebViewOnly")
 	private boolean RestrictedWebViewOnly;
 
-	@JsonIgnore
 	public boolean getRestrictedWebViewOnly() {
 		return this.RestrictedWebViewOnly;
 	}
@@ -34,10 +28,9 @@ public class FileInfo implements Serializable {
 		this.RestrictedWebViewOnly = RestrictedWebViewOnly;
 	}
 
-	@JsonProperty("UserCanPresent")
+	@JSONField(name = "UserCanPresent")
 	private boolean UserCanPresent;
 
-	@JsonIgnore
 	public boolean getUserCanPresent() {
 		return this.UserCanPresent;
 	}
@@ -46,10 +39,9 @@ public class FileInfo implements Serializable {
 		this.UserCanPresent = UserCanPresent;
 	}
 
-	@JsonProperty("BreadcrumbBrandUrl")
+	@JSONField(name = "BreadcrumbBrandUrl")
 	private String BreadcrumbBrandUrl;
 
-	@JsonIgnore
 	public String getBreadcrumbBrandUrl() {
 		return this.BreadcrumbBrandUrl;
 	}
@@ -58,10 +50,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbBrandUrl = BreadcrumbBrandUrl;
 	}
 
-	@JsonProperty("BreadcrumbDocUrl")
+	@JSONField(name = "BreadcrumbDocUrl")
 	private String BreadcrumbDocUrl;
 
-	@JsonIgnore
 	public String getBreadcrumbDocUrl() {
 		return this.BreadcrumbDocUrl;
 	}
@@ -70,10 +61,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbDocUrl = BreadcrumbDocUrl;
 	}
 
-	@JsonProperty("Size")
+	@JSONField(name = "Size")
 	private long Size;
 
-	@JsonIgnore
 	public long getSize() {
 		return this.Size;
 	}
@@ -82,10 +72,9 @@ public class FileInfo implements Serializable {
 		this.Size = Size;
 	}
 
-	@JsonProperty("CloseUrl")
+	@JSONField(name = "CloseUrl")
 	private String CloseUrl;
 
-	@JsonIgnore
 	public String getCloseUrl() {
 		return this.CloseUrl;
 	}
@@ -94,10 +83,9 @@ public class FileInfo implements Serializable {
 		this.CloseUrl = CloseUrl;
 	}
 
-	@JsonProperty("TermsOfUseUrl")
+	@JSONField(name = "TermsOfUseUrl")
 	private String TermsOfUseUrl;
 
-	@JsonIgnore
 	public String getTermsOfUseUrl() {
 		return this.TermsOfUseUrl;
 	}
@@ -106,10 +94,9 @@ public class FileInfo implements Serializable {
 		this.TermsOfUseUrl = TermsOfUseUrl;
 	}
 
-	@JsonProperty("HostEmbeddedViewUrl")
+	@JSONField(name = "HostEmbeddedViewUrl")
 	private String HostEmbeddedViewUrl;
 
-	@JsonIgnore
 	public String getHostEmbeddedViewUrl() {
 		return this.HostEmbeddedViewUrl;
 	}
@@ -118,10 +105,9 @@ public class FileInfo implements Serializable {
 		this.HostEmbeddedViewUrl = HostEmbeddedViewUrl;
 	}
 
-	@JsonProperty("SupportsFolders")
+	@JSONField(name = "SupportsFolders")
 	private boolean SupportsFolders;
 
-	@JsonIgnore
 	public boolean getSupportsFolders() {
 		return this.SupportsFolders;
 	}
@@ -130,10 +116,9 @@ public class FileInfo implements Serializable {
 		this.SupportsFolders = SupportsFolders;
 	}
 
-	@JsonProperty("PresenceUserId")
+	@JSONField(name = "PresenceUserId")
 	private String PresenceUserId;
 
-	@JsonIgnore
 	public String getPresenceUserId() {
 		return this.PresenceUserId;
 	}
@@ -142,10 +127,9 @@ public class FileInfo implements Serializable {
 		this.PresenceUserId = PresenceUserId;
 	}
 
-	@JsonProperty("Version")
+	@JSONField(name = "Version")
 	private long Version;
 
-	@JsonIgnore
 	public long getVersion() {
 		return this.Version;
 	}
@@ -154,10 +138,9 @@ public class FileInfo implements Serializable {
 		this.Version = Version;
 	}
 
-	@JsonProperty("AllowExternalMarketplace")
+	@JSONField(name = "AllowExternalMarketplace")
 	private boolean AllowExternalMarketplace;
 
-	@JsonIgnore
 	public boolean getAllowExternalMarketplace() {
 		return this.AllowExternalMarketplace;
 	}
@@ -166,10 +149,9 @@ public class FileInfo implements Serializable {
 		this.AllowExternalMarketplace = AllowExternalMarketplace;
 	}
 
-	@JsonProperty("HostViewUrl")
+	@JSONField(name = "HostViewUrl")
 	private String HostViewUrl;
 
-	@JsonIgnore
 	public String getHostViewUrl() {
 		return this.HostViewUrl;
 	}
@@ -178,10 +160,9 @@ public class FileInfo implements Serializable {
 		this.HostViewUrl = HostViewUrl;
 	}
 
-	@JsonProperty("HostName")
+	@JSONField(name = "HostName")
 	private String HostName;
 
-	@JsonIgnore
 	public String getHostName() {
 		return this.HostName;
 	}
@@ -190,10 +171,9 @@ public class FileInfo implements Serializable {
 		this.HostName = HostName;
 	}
 
-	@JsonProperty("DownloadUrl")
+	@JSONField(name = "DownloadUrl")
 	private String DownloadUrl;
 
-	@JsonIgnore
 	public String getDownloadUrl() {
 		return this.DownloadUrl;
 	}
@@ -202,10 +182,9 @@ public class FileInfo implements Serializable {
 		this.DownloadUrl = DownloadUrl;
 	}
 
-	@JsonProperty("ReadOnly")
+	@JSONField(name = "ReadOnly")
 	private boolean ReadOnly;
 
-	@JsonIgnore
 	public boolean getReadOnly() {
 		return this.ReadOnly;
 	}
@@ -214,10 +193,9 @@ public class FileInfo implements Serializable {
 		this.ReadOnly = ReadOnly;
 	}
 
-	@JsonProperty("SupportsSecureStore")
+	@JSONField(name = "SupportsSecureStore")
 	private boolean SupportsSecureStore;
 
-	@JsonIgnore
 	public boolean getSupportsSecureStore() {
 		return this.SupportsSecureStore;
 	}
@@ -226,10 +204,9 @@ public class FileInfo implements Serializable {
 		this.SupportsSecureStore = SupportsSecureStore;
 	}
 
-	@JsonProperty("DisableBrowserCachingOfUserContent")
+	@JSONField(name = "DisableBrowserCachingOfUserContent")
 	private boolean DisableBrowserCachingOfUserContent;
 
-	@JsonIgnore
 	public boolean getDisableBrowserCachingOfUserContent() {
 		return this.DisableBrowserCachingOfUserContent;
 	}
@@ -238,10 +215,9 @@ public class FileInfo implements Serializable {
 		this.DisableBrowserCachingOfUserContent = DisableBrowserCachingOfUserContent;
 	}
 
-	@JsonProperty("HostEmbeddedEditUrl")
+	@JSONField(name = "HostEmbeddedEditUrl")
 	private String HostEmbeddedEditUrl;
 
-	@JsonIgnore
 	public String getHostEmbeddedEditUrl() {
 		return this.HostEmbeddedEditUrl;
 	}
@@ -250,10 +226,9 @@ public class FileInfo implements Serializable {
 		this.HostEmbeddedEditUrl = HostEmbeddedEditUrl;
 	}
 
-	@JsonProperty("SupportsLocks")
+	@JSONField(name = "SupportsLocks")
 	private boolean SupportsLocks;
 
-	@JsonIgnore
 	public boolean getSupportsLocks() {
 		return this.SupportsLocks;
 	}
@@ -262,10 +237,9 @@ public class FileInfo implements Serializable {
 		this.SupportsLocks = SupportsLocks;
 	}
 
-	@JsonProperty("SignoutUrl")
+	@JSONField(name = "SignoutUrl")
 	private String SignoutUrl;
 
-	@JsonIgnore
 	public String getSignoutUrl() {
 		return this.SignoutUrl;
 	}
@@ -274,10 +248,9 @@ public class FileInfo implements Serializable {
 		this.SignoutUrl = SignoutUrl;
 	}
 
-	@JsonProperty("SupportsCoauth")
+	@JSONField(name = "SupportsCoauth")
 	private boolean SupportsCoauth;
 
-	@JsonIgnore
 	public boolean getSupportsCoauth() {
 		return this.SupportsCoauth;
 	}
@@ -286,10 +259,9 @@ public class FileInfo implements Serializable {
 		this.SupportsCoauth = SupportsCoauth;
 	}
 
-	@JsonProperty("BreadcrumbFolderUrl")
+	@JSONField(name = "BreadcrumbFolderUrl")
 	private String BreadcrumbFolderUrl;
 
-	@JsonIgnore
 	public String getBreadcrumbFolderUrl() {
 		return this.BreadcrumbFolderUrl;
 	}
@@ -298,10 +270,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbFolderUrl = BreadcrumbFolderUrl;
 	}
 
-	@JsonProperty("SupportsUpdate")
+	@JSONField(name = "SupportsUpdate")
 	private boolean SupportsUpdate;
 
-	@JsonIgnore
 	public boolean getSupportsUpdate() {
 		return this.SupportsUpdate;
 	}
@@ -310,10 +281,9 @@ public class FileInfo implements Serializable {
 		this.SupportsUpdate = SupportsUpdate;
 	}
 
-	@JsonProperty("TimeZone")
+	@JSONField(name = "TimeZone")
 	private String TimeZone;
 
-	@JsonIgnore
 	public String getTimeZone() {
 		return this.TimeZone;
 	}
@@ -322,10 +292,9 @@ public class FileInfo implements Serializable {
 		this.TimeZone = TimeZone;
 	}
 
-	@JsonProperty("UserCanAttend")
+	@JSONField(name = "UserCanAttend")
 	private boolean UserCanAttend;
 
-	@JsonIgnore
 	public boolean getUserCanAttend() {
 		return this.UserCanAttend;
 	}
@@ -334,10 +303,9 @@ public class FileInfo implements Serializable {
 		this.UserCanAttend = UserCanAttend;
 	}
 
-	@JsonProperty("CloseButtonClosesWindow")
+	@JSONField(name = "CloseButtonClosesWindow")
 	private boolean CloseButtonClosesWindow;
 
-	@JsonIgnore
 	public boolean getCloseButtonClosesWindow() {
 		return this.CloseButtonClosesWindow;
 	}
@@ -346,10 +314,9 @@ public class FileInfo implements Serializable {
 		this.CloseButtonClosesWindow = CloseButtonClosesWindow;
 	}
 
-	@JsonProperty("WebEditingDisabled")
+	@JSONField(name = "WebEditingDisabled")
 	private boolean WebEditingDisabled;
 
-	@JsonIgnore
 	public boolean getWebEditingDisabled() {
 		return this.WebEditingDisabled;
 	}
@@ -358,10 +325,9 @@ public class FileInfo implements Serializable {
 		this.WebEditingDisabled = WebEditingDisabled;
 	}
 
-	@JsonProperty("SupportsScenarioLinks")
+	@JSONField(name = "SupportsScenarioLinks")
 	private boolean SupportsScenarioLinks;
 
-	@JsonIgnore
 	public boolean getSupportsScenarioLinks() {
 		return this.SupportsScenarioLinks;
 	}
@@ -370,10 +336,9 @@ public class FileInfo implements Serializable {
 		this.SupportsScenarioLinks = SupportsScenarioLinks;
 	}
 
-	@JsonProperty("HostEditUrl")
+	@JSONField(name = "HostEditUrl")
 	private String HostEditUrl;
 
-	@JsonIgnore
 	public String getHostEditUrl() {
 		return this.HostEditUrl;
 	}
@@ -382,10 +347,9 @@ public class FileInfo implements Serializable {
 		this.HostEditUrl = HostEditUrl;
 	}
 
-	@JsonProperty("BreadcrumbFolderName")
+	@JSONField(name = "BreadcrumbFolderName")
 	private String BreadcrumbFolderName;
 
-	@JsonIgnore
 	public String getBreadcrumbFolderName() {
 		return this.BreadcrumbFolderName;
 	}
@@ -394,10 +358,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbFolderName = BreadcrumbFolderName;
 	}
 
-	@JsonProperty("FileSharingUrl")
+	@JSONField(name = "FileSharingUrl")
 	private String FileSharingUrl;
 
-	@JsonIgnore
 	public String getFileSharingUrl() {
 		return this.FileSharingUrl;
 	}
@@ -406,10 +369,9 @@ public class FileInfo implements Serializable {
 		this.FileSharingUrl = FileSharingUrl;
 	}
 
-	@JsonProperty("SupportsCobalt")
+	@JSONField(name = "SupportsCobalt")
 	private boolean SupportsCobalt;
 
-	@JsonIgnore
 	public boolean getSupportsCobalt() {
 		return this.SupportsCobalt;
 	}
@@ -418,10 +380,9 @@ public class FileInfo implements Serializable {
 		this.SupportsCobalt = SupportsCobalt;
 	}
 
-	@JsonProperty("DisableTranslation")
+	@JSONField(name = "DisableTranslation")
 	private boolean DisableTranslation;
 
-	@JsonIgnore
 	public boolean getDisableTranslation() {
 		return this.DisableTranslation;
 	}
@@ -430,10 +391,9 @@ public class FileInfo implements Serializable {
 		this.DisableTranslation = DisableTranslation;
 	}
 
-	@JsonProperty("IrmPolicyDescription")
+	@JSONField(name = "IrmPolicyDescription")
 	private String IrmPolicyDescription;
 
-	@JsonIgnore
 	public String getIrmPolicyDescription() {
 		return this.IrmPolicyDescription;
 	}
@@ -442,10 +402,9 @@ public class FileInfo implements Serializable {
 		this.IrmPolicyDescription = IrmPolicyDescription;
 	}
 
-	@JsonProperty("BaseFileName")
+	@JSONField(name = "BaseFileName")
 	private String BaseFileName;
 
-	@JsonIgnore
 	public String getBaseFileName() {
 		return this.BaseFileName;
 	}
@@ -454,10 +413,9 @@ public class FileInfo implements Serializable {
 		this.BaseFileName = BaseFileName;
 	}
 
-	@JsonProperty("PresenceProvider")
+	@JSONField(name = "PresenceProvider")
 	private String PresenceProvider;
 
-	@JsonIgnore
 	public String getPresenceProvider() {
 		return this.PresenceProvider;
 	}
@@ -466,10 +424,9 @@ public class FileInfo implements Serializable {
 		this.PresenceProvider = PresenceProvider;
 	}
 
-	@JsonProperty("UserFriendlyName")
+	@JSONField(name = "UserFriendlyName")
 	private String UserFriendlyName;
 
-	@JsonIgnore
 	public String getUserFriendlyName() {
 		return this.UserFriendlyName;
 	}
@@ -478,10 +435,9 @@ public class FileInfo implements Serializable {
 		this.UserFriendlyName = UserFriendlyName;
 	}
 
-	@JsonProperty("OwnerId")
+	@JSONField(name = "OwnerId")
 	private String OwnerId;
 
-	@JsonIgnore
 	public String getOwnerId() {
 		return this.OwnerId;
 	}
@@ -490,10 +446,9 @@ public class FileInfo implements Serializable {
 		this.OwnerId = OwnerId;
 	}
 
-	@JsonProperty("UserCanNotWriteRelative")
+	@JSONField(name = "UserCanNotWriteRelative")
 	private boolean UserCanNotWriteRelative;
 
-	@JsonIgnore
 	public boolean getUserCanNotWriteRelative() {
 		return this.UserCanNotWriteRelative;
 	}
@@ -502,10 +457,9 @@ public class FileInfo implements Serializable {
 		this.UserCanNotWriteRelative = UserCanNotWriteRelative;
 	}
 
-	@JsonProperty("BreadcrumbDocName")
+	@JSONField(name = "BreadcrumbDocName")
 	private String BreadcrumbDocName;
 
-	@JsonIgnore
 	public String getBreadcrumbDocName() {
 		return this.BreadcrumbDocName;
 	}
@@ -514,10 +468,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbDocName = BreadcrumbDocName;
 	}
 
-	@JsonProperty("HostNotes")
+	@JSONField(name = "HostNotes")
 	private String HostNotes;
 
-	@JsonIgnore
 	public String getHostNotes() {
 		return this.HostNotes;
 	}
@@ -526,10 +479,9 @@ public class FileInfo implements Serializable {
 		this.HostNotes = HostNotes;
 	}
 
-	@JsonProperty("SHA256")
+	@JSONField(name = "SHA256")
 	private String SHA256;
 
-	@JsonIgnore
 	public String getSHA256() {
 		return this.SHA256;
 	}
@@ -538,10 +490,9 @@ public class FileInfo implements Serializable {
 		this.SHA256 = SHA256;
 	}
 
-	@JsonProperty("UserCanWrite")
+	@JSONField(name = "UserCanWrite")
 	private boolean UserCanWrite;
 
-	@JsonIgnore
 	public boolean getUserCanWrite() {
 		return this.UserCanWrite;
 	}
@@ -550,10 +501,9 @@ public class FileInfo implements Serializable {
 		this.UserCanWrite = UserCanWrite;
 	}
 
-	@JsonProperty("FileUrl")
+	@JSONField(name = "FileUrl")
 	private String FileUrl;
 
-	@JsonIgnore
 	public String getFileUrl() {
 		return this.FileUrl;
 	}
@@ -562,10 +512,9 @@ public class FileInfo implements Serializable {
 		this.FileUrl = FileUrl;
 	}
 
-	@JsonProperty("TenantId")
+	@JSONField(name = "TenantId")
 	private String TenantId;
 
-	@JsonIgnore
 	public String getTenantId() {
 		return this.TenantId;
 	}
@@ -574,10 +523,9 @@ public class FileInfo implements Serializable {
 		this.TenantId = TenantId;
 	}
 
-	@JsonProperty("DisablePrint")
+	@JSONField(name = "DisablePrint")
 	private boolean DisablePrint;
 
-	@JsonIgnore
 	public boolean getDisablePrint() {
 		return this.DisablePrint;
 	}
@@ -586,10 +534,9 @@ public class FileInfo implements Serializable {
 		this.DisablePrint = DisablePrint;
 	}
 
-	@JsonProperty("UserId")
+	@JSONField(name = "UserId")
 	private String UserId;
 
-	@JsonIgnore
 	public String getUserId() {
 		return this.UserId;
 	}
@@ -598,10 +545,9 @@ public class FileInfo implements Serializable {
 		this.UserId = UserId;
 	}
 
-	@JsonProperty("ClientUrl")
+	@JSONField(name = "ClientUrl")
 	private String ClientUrl;
 
-	@JsonIgnore
 	public String getClientUrl() {
 		return this.ClientUrl;
 	}
@@ -610,10 +556,9 @@ public class FileInfo implements Serializable {
 		this.ClientUrl = ClientUrl;
 	}
 
-	@JsonProperty("HostAuthenticationId")
+	@JSONField(name = "HostAuthenticationId")
 	private String HostAuthenticationId;
 
-	@JsonIgnore
 	public String getHostAuthenticationId() {
 		return this.HostAuthenticationId;
 	}
@@ -622,10 +567,9 @@ public class FileInfo implements Serializable {
 		this.HostAuthenticationId = HostAuthenticationId;
 	}
 
-	@JsonProperty("IrmPolicyTitle")
+	@JSONField(name = "IrmPolicyTitle")
 	private String IrmPolicyTitle;
 
-	@JsonIgnore
 	public String getIrmPolicyTitle() {
 		return this.IrmPolicyTitle;
 	}
@@ -634,10 +578,9 @@ public class FileInfo implements Serializable {
 		this.IrmPolicyTitle = IrmPolicyTitle;
 	}
 
-	@JsonProperty("ProtectInClient")
+	@JSONField(name = "ProtectInClient")
 	private boolean ProtectInClient;
 
-	@JsonIgnore
 	public boolean getProtectInClient() {
 		return this.ProtectInClient;
 	}
@@ -646,10 +589,9 @@ public class FileInfo implements Serializable {
 		this.ProtectInClient = ProtectInClient;
 	}
 
-	@JsonProperty("BreadcrumbBrandName")
+	@JSONField(name = "BreadcrumbBrandName")
 	private String BreadcrumbBrandName;
 
-	@JsonIgnore
 	public String getBreadcrumbBrandName() {
 		return this.BreadcrumbBrandName;
 	}
@@ -658,10 +600,9 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbBrandName = BreadcrumbBrandName;
 	}
 
-	@JsonProperty("PrivacyUrl")
+	@JSONField(name = "PrivacyUrl")
 	private String PrivacyUrl;
 
-	@JsonIgnore
 	public String getPrivacyUrl() {
 		return this.PrivacyUrl;
 	}
