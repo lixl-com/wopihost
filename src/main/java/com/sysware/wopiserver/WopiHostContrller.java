@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -17,18 +18,20 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sysware.wopiserver.entity.FileInfo;
-import com.sysware.wopiserver.utils.ValueUtil;
+import com.sysware.wopiserver.service.ValueService;
 
 /**
  * WOPI HOST Created by admin on 2017/4/15.
@@ -36,9 +39,6 @@ import com.sysware.wopiserver.utils.ValueUtil;
 @Controller
 @RequestMapping(value = "/wopi")
 public class WopiHostContrller {
-
-	@Value("${SYSWARE_HOST}")
-	private String SYSWARE_HOST;
 
 	private Logger logger = Logger.getLogger(getClass());
 
@@ -48,10 +48,10 @@ public class WopiHostContrller {
 	 * @param name
 	 * @param response
 	 */
-	@RequestMapping(value = "/files/{access_token}/contents", method = RequestMethod.GET)
-	public void getFile(@PathVariable(value = "access_token") String access_token, HttpServletRequest request,
-			HttpServletResponse response) {
-		JSONObject obj = ValueUtil.getInstance().getFileInfo(access_token);
+	@RequestMapping(value = "/filedownload")
+	public void fileDownLoad(HttpServletRequest request, HttpServletResponse response) {
+		String fileId = request.getParameter("fileId");
+		JSONObject obj = valueService.getFileInfo(fileId);
 		if (obj == null)
 			return;
 
@@ -106,9 +106,9 @@ public class WopiHostContrller {
 	 * @param name
 	 * @param content
 	 */
-	@RequestMapping(value = "/files/{access_token}/contents", method = RequestMethod.POST)
-	public void postFile(@PathVariable(value = "access_token") String access_token, @RequestBody byte[] content) {
-		JSONObject obj = ValueUtil.getInstance().getFileInfo(access_token);
+	@RequestMapping(value = "/files/{fileId}/contents")
+	public void postFile(@PathVariable(value = "fileId") String fileId, @RequestBody byte[] content) {
+		JSONObject obj = valueService.getFileInfo(fileId);
 		if (obj == null)
 			return;
 
@@ -134,6 +134,9 @@ public class WopiHostContrller {
 		}
 	}
 
+	@Autowired
+	ValueService valueService;
+
 	/**
 	 * 获取文件信息
 	 * 
@@ -142,45 +145,64 @@ public class WopiHostContrller {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-	@RequestMapping(value = "/files/{access_token}", method = RequestMethod.GET)
-	public void getFileInfo(@PathVariable(value = "access_token") String access_token, HttpServletRequest request,
+	@RequestMapping(value = "/files/{fileId}")
+	public void getFileInfo(@PathVariable(value = "fileId") String fileId, HttpServletRequest request,
 			HttpServletResponse response) {
-		JSONObject fileInfo = ValueUtil.getInstance().getFileInfo(access_token);
-		if (fileInfo == null)
-			return;
-		JSONObject token = ValueUtil.getInstance().getToken(access_token);
+		String access_token = request.getParameter("access_token");
+		String path = request.getContextPath();
+		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
 
-		FileInfo info = new FileInfo();
-		File file = new File(fileInfo.getString("filePath"));
-		boolean canWrite = token.getBooleanValue("canWrite");
+		JSONObject fileInfo = valueService.getFileInfo(fileId);
+		File file = null;
+		if (fileInfo != null) {
+			file = new File(fileInfo.getString("filePath"));
+		}
 
-		if (file.exists()) {
+		JSONObject token = valueService.getToken(access_token);
+
+		if (file != null && file.exists() && token != null) {
+			FileInfo info = new FileInfo();
+			info.setUserFriendlyName(token.getString("userName"));
 			// 取得文件名
 			info.setBaseFileName(fileInfo.getString("fileName"));
 			info.setSize(file.length());
+			info.setFileExtension(FilenameUtils.getExtension(info.getBaseFileName()));
 			info.setOwnerId(token.getString("userId"));
-			info.setVersion(file.lastModified());
+			info.setUserId(token.getString("userId"));
+			info.setVersion("" + file.lastModified());
 			info.setSHA256(getHash256(file));
-			if (canWrite) {
+			info.setAllowExternalMarketplace(true);
+			if (token.getBooleanValue("canWrite")) {
 				info.setUserCanWrite(true);
 				info.setSupportsUpdate(true);
 				info.setSupportsLocks(true);
+				// info.setSupportsCoauth(true);
+				// info.setSupportsCobalt(true);
+				// 显示编辑按钮 2013
 				info.setSupportsFolders(true);
-				info.setDownloadUrl("https://www.baidu.com");
+				// 显示下载按钮
+				info.setDownloadUrl(basePath + "/wopi/filedownload?fileId=" + fileId);
 			} else {
 				info.setReadOnly(true);
-				info.setAllowExternalMarketplace(true);
 			}
+			// 中文文件名称设置编码
+			response.setHeader("Content-type", "text/html;charset=UTF-8");
+			response.setCharacterEncoding("UTF-8");
 
+			try {
+				ObjectMapper mapper = new ObjectMapper();
+				String jsonString = mapper.writeValueAsString(info);
+				PrintWriter writer = response.getWriter();
+				writer.write(jsonString);
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			response.setStatus(HttpStatus.SC_NOT_FOUND);
 		}
-		// 中文文件名称设置编码
-		response.setHeader("Content-type", "text/html;charset=UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		try {
-			response.getWriter().write(JSONObject.toJSONString(fileInfo));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	/**

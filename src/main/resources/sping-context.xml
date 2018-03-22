@@ -20,7 +20,7 @@
       <property name="location">    
           <value>classpath:config.properties</value>    
       </property>    
-	</bean> 
+	</bean>
 	
 	<!-- 内容管理器配置 -->
 	<bean id="contentManager"
