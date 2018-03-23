@@ -28,6 +28,7 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -50,9 +51,9 @@ public class WopiHostContrller {
 	 * @param name
 	 * @param response
 	 */
-	@RequestMapping(value = "/filedownload")
-	public void fileDownLoad(HttpServletRequest request, HttpServletResponse response) {
-		String fileId = request.getParameter("fileId");
+	@RequestMapping(value = "/files/{fileId}/contents", method = RequestMethod.GET)
+	public void fileDownLoad(@PathVariable(value = "fileId") String fileId, HttpServletRequest request,
+			HttpServletResponse response) {
 		JSONObject obj = valueService.getFileInfo(fileId);
 		if (obj == null)
 			return;
@@ -108,7 +109,7 @@ public class WopiHostContrller {
 	 * @param name
 	 * @param content
 	 */
-	@RequestMapping(value = "/files/{fileId}/contents")
+	@RequestMapping(value = "/files/{fileId}/contents", method = RequestMethod.POST)
 	public void postFile(@PathVariable(value = "fileId") String fileId, @RequestBody byte[] content) {
 		JSONObject obj = valueService.getFileInfo(fileId);
 		if (obj == null)
@@ -157,10 +158,9 @@ public class WopiHostContrller {
 		if (StringUtils.isNotEmpty(access_token) && access_token.indexOf(".") > 0) {
 			int l = access_token.indexOf(".");
 			token = valueService.getToken(access_token.substring(0, l));
-			if(l+1<=access_token.length() && "true".equals(access_token.substring(l+1))) {
+			if (l + 1 <= access_token.length() && "true".equals(access_token.substring(l + 1))) {
 				canedit = true;
 			}
-			
 		}
 
 		if (token == null) {
@@ -191,7 +191,7 @@ public class WopiHostContrller {
 		info.setSHA256(getHash256(file));
 		info.setAllowExternalMarketplace(true);
 		// 显示下载按钮
-		info.setDownloadUrl(StringUtil.BASE_PATH + "wopi/filedownload?fileId=" + fileId);
+		info.setDownloadUrl(StringUtil.BASE_PATH + "/files/" + fileId + "/contents");
 		if (canedit) {
 			info.setUserCanWrite(true);
 			info.setSupportsUpdate(true);

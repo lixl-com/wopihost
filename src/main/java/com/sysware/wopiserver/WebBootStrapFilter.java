@@ -22,8 +22,8 @@ public class WebBootStrapFilter extends CharacterEncodingFilter {
 		String path = request.getContextPath();
 		StringUtil.BASE_PATH = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 				+ path + "/";
-
-		log.info(StringUtil.BASE_PATH + request.getServletPath());
+		
+		log.info(request.getMethod()+"\t"+StringUtil.BASE_PATH + request.getServletPath());
 
 		super.doFilterInternal(request, response, filterChain);
 	}
