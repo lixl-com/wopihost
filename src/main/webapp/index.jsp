@@ -1,10 +1,8 @@
+<%@page import="com.sysware.wopiserver.utils.StringUtil"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
+	String basePath = StringUtil.BASE_PATH;
 %>
 <html>
 <head>
@@ -20,9 +18,29 @@
 	$(function(){
 		var basePath = "<%=basePath%>";
 		var OFFICE_WEBAPP_SERVER_HOST_2013 = "http://192.168.40.147/hosting/discovery";
-		var WOPISrc = "http://192.168.0.32:8080/wopiserver/wopi/files/{0}&access_token=aaaa1";
+		var WOPISrc = "http://192.168.0.32:8888/wopiserver/wopi/files/{0}&access_token={access_token}.{canedit}";
 		
 		//$("#office_webapp_2013").attr("href",OFFICE_WEBAPP_SERVER_HOST+"hosting/discovery");
+		
+		$.ajax({
+			url : basePath+"data/access_token.json",
+			dataType:"json",
+			success:function(data){
+				var i=0;
+				for(var id in data){
+					var p = {
+						value : id,
+						isSelected : "",
+						name : data[id].userName
+					};
+					if(i==0){
+						p.isSelected = 'selected="selected"';
+					}
+					$("#user_list").append('<option value="{value}" {isSelected}>{name}</option>'.format(p));
+					i++;
+				}
+			}
+		});
 		
 		function getWOPIUrl(fileName){
 			var ext = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
@@ -63,8 +81,10 @@
 	    	success:function(data){
 	    		for(var id in data){
 	    			var WOPIUrl = getWOPIUrl(data[id].fileName).format(WOPISrc.format(id));
-	    			var row = [data[id].fileName, 
-	    				"<button href='{0}'>在线查看</button>".format(WOPIUrl), 
+	    			var downURL = basePath+"wopi/filedownload?fileId="+id;
+	    			var row = ["<a target='_blank' href='{0}'>{1}</a>".format(downURL, data[id].fileName), 
+	    				"<button href='{0}'>查看</button>".format(WOPIUrl.format({"canedit":"false"}))+
+	    				"<button href='{0}'>编辑</button>".format(WOPIUrl.format({"canedit":"true"})), 
 	    				"<button>在线查看</button>"];
 	    			dataSet.push(row);
 	    		} 
@@ -94,7 +114,7 @@
 	    $("#main_div").on("click", "button", function(){
 	    	var href = $(this).attr("href");
 	    	if(href){
-	    		window.open(href);
+	    		window.open(href.format({"access_token":$("#user_list ").val()}));
 	    	}
 	    });
 	});
@@ -109,37 +129,16 @@
 			        OFFICE ONLINE DEMO
 			    </div>
 			    <div class="panel-body">
+			    	<div class="col-md-4">
+			        	<label>选择用户</label>
+						<select id="user_list" multiple class="form-control">
+						</select>
+			        </div>
 				    <table id="main_div" class="table table-striped"></table>
 			    </div>
 			</div>
 		</div>
 		<div class="col-md-1"></div>
 	</div>
-
-
-<!--  -->
-<!-- <h2>DEMO</h2>
-<table>
-	<tr>
-		<td>Office online 2016</td>
-		<td><a target="_blank" href="http://192.168.11.118/wv/wordviewerframe.aspx?ui=zh-CN&rs=zh-CN&WOPISrc=http://192.168.0.32:8080/wopiserver/wopi/files/1&access_token=aaaa1">在线查看</a></td>
-	</tr>
-	<tr>
-		<td>Office online 2016</td>
-		<td><a target="_blank" href="http://192.168.11.118/we/wordeditorframe.aspx?ui=zh-CN&rs=zh-CN&WOPISrc=http://192.168.0.32:8080/wopiserver/wopi/files/1&access_token=aaaa1">在线编辑</a></td>
-	</tr>
-	
-	<tr>
-		<td colspan="2"><a id="office_webapp_2013" target="_blank" href="#">Office Web App 2013</a></td>
-	</tr>
-	<tr>
-		<td>Word</td>
-		<td><a target="_blank" href="http://192.168.40.147/wv/wordviewerframe.aspx?ui=zh-CN&rs=zh-CN&WOPISrc=http://192.168.0.32:8080/wopiserver/wopi/files/1&access_token=aaaa1">在线查看</a></td>
-	</tr>
-	<tr>
-		<td>Word</td>
-		<td><a target="_blank" href="http://192.168.40.147/we/wordeditorframe.aspx?ui=zh-CN&rs=zh-CN&WOPISrc=http://192.168.0.32:8080/wopiserver/wopi/files/1&access_token=aaaa1">在线编辑</a></td>
-	</tr>
-</table> -->
 </body>
 </html>

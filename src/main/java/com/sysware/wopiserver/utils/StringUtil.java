@@ -31,4 +31,6 @@ public class StringUtil {
 		return value;
 	}
 
+	public static String BASE_PATH = "";
+
 }

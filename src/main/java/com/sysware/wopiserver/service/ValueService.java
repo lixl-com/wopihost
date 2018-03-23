@@ -1,15 +1,12 @@
 package com.sysware.wopiserver.service;
 
-import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sysware.wopiserver.utils.HttpClientUtil;
+import com.sysware.wopiserver.utils.StringUtil;
 
 @Service
 public class ValueService {
@@ -18,12 +15,7 @@ public class ValueService {
 	private String SYSWARE_HOST;
 
 	public JSONObject getToken(String access_token) {
-		String datas = "";
-		try {
-			Resource fileRource = new ClassPathResource("data/access_token.json");
-			datas = IOUtils.toString(fileRource.getInputStream());
-		} catch (IOException e) {
-		}
+		String datas = HttpClientUtil.get(StringUtil.BASE_PATH + "data/access_token.json");
 		if (StringUtils.isNotEmpty(datas)) {
 			JSONObject data = JSONObject.parseObject(datas);
 			if (data != null) {
@@ -34,19 +26,13 @@ public class ValueService {
 	}
 
 	public JSONObject getFileInfo(String fileId) {
-			String datas = "";
-			try {
-				Resource fileRource = new ClassPathResource("data/files.json");
-				datas = IOUtils.toString(fileRource.getInputStream());
-			} catch (IOException e) {
-			}
-
-			if (StringUtils.isNotEmpty(datas)) {
-				JSONObject data = JSONObject.parseObject(datas);
+		String datas = HttpClientUtil.get(StringUtil.BASE_PATH + "data/files.json");
+		if (StringUtils.isNotEmpty(datas)) {
+			JSONObject data = JSONObject.parseObject(datas);
 			if (data != null) {
 				return data.getJSONObject(fileId);
 			}
-			}
+		}
 		return null;
 	}
 
