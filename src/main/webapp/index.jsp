@@ -18,7 +18,7 @@
 	$(function(){
 		var basePath = "<%=basePath%>";
 		var OFFICE_WEBAPP_SERVER_HOST_2013 = "http://192.168.40.147/hosting/discovery";
-		var WOPISrc = "http://192.168.0.32:8888/wopiserver/wopi/files/{0}&access_token={access_token}.{canedit}";
+		var WOPISrc = "http://192.168.0.32:8888/wopiserver/wopi/files/{0}&access_token={access_token}_{canedit}";
 		
 		//$("#office_webapp_2013").attr("href",OFFICE_WEBAPP_SERVER_HOST+"hosting/discovery");
 		
@@ -81,7 +81,7 @@
 	    	success:function(data){
 	    		for(var id in data){
 	    			var WOPIUrl = getWOPIUrl(data[id].fileName).format(WOPISrc.format(id));
-	    			var downURL = basePath+"wopi/filedownload?fileId="+id;
+	    			var downURL = basePath+"wopi/files/"+id+"/contents";
 	    			var row = ["<a target='_blank' href='{0}'>{1}</a>".format(downURL, data[id].fileName), 
 	    				"<button href='{0}'>查看</button>".format(WOPIUrl.format({"canedit":"false"}))+
 	    				"<button href='{0}'>编辑</button>".format(WOPIUrl.format({"canedit":"true"})), 

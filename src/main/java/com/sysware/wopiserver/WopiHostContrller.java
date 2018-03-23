@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -17,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
@@ -59,7 +59,7 @@ public class WopiHostContrller {
 			return;
 
 		// 文件的路径
-		File file = new File(obj.getString("filePath"));
+		File file = StringUtil.getLastestFile(new File(obj.getString("filePath")));
 		if (!file.exists()) {
 			return;
 		}
@@ -110,31 +110,31 @@ public class WopiHostContrller {
 	 * @param content
 	 */
 	@RequestMapping(value = "/files/{fileId}/contents", method = RequestMethod.POST)
-	public void postFile(@PathVariable(value = "fileId") String fileId, @RequestBody byte[] content) {
+	public void postFile(@PathVariable(value = "fileId") String fileId, HttpServletRequest request,
+			@RequestBody byte[] content) {
 		JSONObject obj = valueService.getFileInfo(fileId);
+		String access_token = request.getParameter("access_token");
+		System.out.println();
 		if (obj == null)
 			return;
-
+		String filePath = obj.getString("filePath");
 		// 文件的路径
-		File file = new File(obj.getString("filePath"));
-		FileOutputStream fop = null;
+		File oldFile = StringUtil.getLastestFile(new File(filePath));
+		String extension = FilenameUtils.getExtension(oldFile.getName());
+		int version = 0;
+		if (StringUtils.isNotEmpty(extension)) {
+			version = Integer.parseInt(extension);
+		}
+		version++;
+		String bname = FilenameUtils.getBaseName(oldFile.getName());
+		File newFile = new File(
+				oldFile.getParent() + "/" + FilenameUtils.getBaseName(bname) + "." + access_token + "." + version);
 		try {
-			if (!file.exists()) {
-				file.createNewFile();// 构建文件
-			}
-			fop = new FileOutputStream(file);
-			fop.write(content);
-			fop.flush();
-			logger.debug("saved file " + obj.getString("filePath"));
+			FileUtils.writeByteArrayToFile(newFile, content);
 		} catch (IOException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				fop.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
+		logger.debug("save to " + newFile.getAbsolutePath());
 	}
 
 	@Autowired
@@ -155,8 +155,8 @@ public class WopiHostContrller {
 		String access_token = request.getParameter("access_token");
 		JSONObject token = null;
 		boolean canedit = false;
-		if (StringUtils.isNotEmpty(access_token) && access_token.indexOf(".") > 0) {
-			int l = access_token.indexOf(".");
+		if (StringUtils.isNotEmpty(access_token) && access_token.indexOf("_") > 0) {
+			int l = access_token.indexOf("_");
 			token = valueService.getToken(access_token.substring(0, l));
 			if (l + 1 <= access_token.length() && "true".equals(access_token.substring(l + 1))) {
 				canedit = true;
@@ -179,6 +179,8 @@ public class WopiHostContrller {
 			return null;
 		}
 
+		file = StringUtil.getLastestFile(file);
+
 		FileInfo info = new FileInfo();
 		info.setUserFriendlyName(token.getString("userName"));
 		// 取得文件名
@@ -191,7 +193,7 @@ public class WopiHostContrller {
 		info.setSHA256(getHash256(file));
 		info.setAllowExternalMarketplace(true);
 		// 显示下载按钮
-		info.setDownloadUrl(StringUtil.BASE_PATH + "/files/" + fileId + "/contents");
+		info.setDownloadUrl(StringUtil.BASE_PATH + "wopi/files/" + fileId + "/contents");
 		if (canedit) {
 			info.setUserCanWrite(true);
 			info.setSupportsUpdate(true);
