@@ -198,8 +198,8 @@ public class WopiHostContrller {
 			info.setUserCanWrite(true);
 			info.setSupportsUpdate(true);
 			info.setSupportsLocks(true);
-			// info.setSupportsCoauth(true);
-			// info.setSupportsCobalt(true);
+			info.setSupportsCoauth(true);
+			info.setSupportsCobalt(true);
 			info.setSupportsFolders(true);
 		} else {
 			info.setReadOnly(true);

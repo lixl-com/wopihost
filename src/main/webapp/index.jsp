@@ -17,8 +17,8 @@
 	<script type="text/javascript">
 	$(function(){
 		var basePath = "<%=basePath%>";
-		var OFFICE_WEBAPP_SERVER_HOST_2013 = "http://192.168.40.147/hosting/discovery";
-		var WOPISrc = "http://192.168.0.32:8888/wopiserver/wopi/files/{0}&access_token={access_token}_{canedit}";
+		var OFFICE_WEBAPP_SERVER_HOST_2013 = "http://192.168.10.116/hosting/discovery";
+		var WOPISrc = "http://192.168.11.102:8080/wopihost/wopi/files/{0}&access_token={access_token}_{canedit}";
 		
 		//$("#office_webapp_2013").attr("href",OFFICE_WEBAPP_SERVER_HOST+"hosting/discovery");
 		
