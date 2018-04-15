@@ -4,10 +4,12 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TEst {
 
-	public static void main(String[] args) {
+	public static void main2(String[] args) {
 		String str = "{\r\n" + 
 				" \"AllowAdditionalMicrosoftServices\":{\"type\":\"bool\",\"default\":false,\"optional\":true},\r\n" + 
 				" \"AllowExternalMarketplace\":{\"type\":\"bool\",\"default\":false,\"optional\":true},\r\n" + 
@@ -117,6 +119,13 @@ public class TEst {
 		FileInfo info = new FileInfo();
 		info.setHostRestUrl("ewew");
 		System.out.println(JSONObject.toJSONString(info,SerializerFeature.WriteMapNullValue));
+	}
+	
+	public static void main(String[] args) throws JsonProcessingException {
+		FileInfo info = new FileInfo();
+		ObjectMapper mapper = new ObjectMapper();
+		String Json = mapper.writeValueAsString(info);
+		System.out.println(Json);
 	}
 
 }

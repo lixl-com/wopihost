@@ -2,12 +2,14 @@ package com.sysware.wopiserver.entity;
 
 import java.io.Serializable;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FileInfo implements Serializable {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-
 	@JsonProperty("HostRestUrl")
 	private String HostRestUrl;
 
@@ -68,30 +70,6 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbDocUrl = BreadcrumbDocUrl;
 	}
 
-	@JsonProperty("SupportsRename")
-	private boolean SupportsRename;
-
-	@JsonIgnore
-	public boolean getSupportsRename() {
-		return this.SupportsRename;
-	}
-
-	public void setSupportsRename(boolean SupportsRename) {
-		this.SupportsRename = SupportsRename;
-	}
-
-	@JsonProperty("LicenseCheckForEditIsEnabled")
-	private boolean LicenseCheckForEditIsEnabled;
-
-	@JsonIgnore
-	public boolean getLicenseCheckForEditIsEnabled() {
-		return this.LicenseCheckForEditIsEnabled;
-	}
-
-	public void setLicenseCheckForEditIsEnabled(boolean LicenseCheckForEditIsEnabled) {
-		this.LicenseCheckForEditIsEnabled = LicenseCheckForEditIsEnabled;
-	}
-
 	@JsonProperty("Size")
 	private long Size;
 
@@ -116,42 +94,6 @@ public class FileInfo implements Serializable {
 		this.CloseUrl = CloseUrl;
 	}
 
-	@JsonProperty("FileSharingPostMessage")
-	private boolean FileSharingPostMessage;
-
-	@JsonIgnore
-	public boolean getFileSharingPostMessage() {
-		return this.FileSharingPostMessage;
-	}
-
-	public void setFileSharingPostMessage(boolean FileSharingPostMessage) {
-		this.FileSharingPostMessage = FileSharingPostMessage;
-	}
-
-	@JsonProperty("EditAndReplyUrl")
-	private String EditAndReplyUrl;
-
-	@JsonIgnore
-	public String getEditAndReplyUrl() {
-		return this.EditAndReplyUrl;
-	}
-
-	public void setEditAndReplyUrl(String EditAndReplyUrl) {
-		this.EditAndReplyUrl = EditAndReplyUrl;
-	}
-
-	@JsonProperty("SupportsGetLock")
-	private boolean SupportsGetLock;
-
-	@JsonIgnore
-	public boolean getSupportsGetLock() {
-		return this.SupportsGetLock;
-	}
-
-	public void setSupportsGetLock(boolean SupportsGetLock) {
-		this.SupportsGetLock = SupportsGetLock;
-	}
-
 	@JsonProperty("TermsOfUseUrl")
 	private String TermsOfUseUrl;
 
@@ -162,18 +104,6 @@ public class FileInfo implements Serializable {
 
 	public void setTermsOfUseUrl(String TermsOfUseUrl) {
 		this.TermsOfUseUrl = TermsOfUseUrl;
-	}
-
-	@JsonProperty("WorkflowUrl")
-	private String WorkflowUrl;
-
-	@JsonIgnore
-	public String getWorkflowUrl() {
-		return this.WorkflowUrl;
-	}
-
-	public void setWorkflowUrl(String WorkflowUrl) {
-		this.WorkflowUrl = WorkflowUrl;
 	}
 
 	@JsonProperty("HostEmbeddedViewUrl")
@@ -213,39 +143,15 @@ public class FileInfo implements Serializable {
 	}
 
 	@JsonProperty("Version")
-	private String Version;
+	private long Version;
 
 	@JsonIgnore
-	public String getVersion() {
+	public long getVersion() {
 		return this.Version;
 	}
 
-	public void setVersion(String Version) {
+	public void setVersion(long Version) {
 		this.Version = Version;
-	}
-
-	@JsonProperty("UserCanRename")
-	private boolean UserCanRename;
-
-	@JsonIgnore
-	public boolean getUserCanRename() {
-		return this.UserCanRename;
-	}
-
-	public void setUserCanRename(boolean UserCanRename) {
-		this.UserCanRename = UserCanRename;
-	}
-
-	@JsonProperty("FileExtension")
-	private String FileExtension;
-
-	@JsonIgnore
-	public String getFileExtension() {
-		return this.FileExtension;
-	}
-
-	public void setFileExtension(String FileExtension) {
-		this.FileExtension = FileExtension;
 	}
 
 	@JsonProperty("AllowExternalMarketplace")
@@ -270,30 +176,6 @@ public class FileInfo implements Serializable {
 
 	public void setHostViewUrl(String HostViewUrl) {
 		this.HostViewUrl = HostViewUrl;
-	}
-
-	@JsonProperty("SupportsUserInfo")
-	private boolean SupportsUserInfo;
-
-	@JsonIgnore
-	public boolean getSupportsUserInfo() {
-		return this.SupportsUserInfo;
-	}
-
-	public void setSupportsUserInfo(boolean SupportsUserInfo) {
-		this.SupportsUserInfo = SupportsUserInfo;
-	}
-
-	@JsonProperty("AllowAdditionalMicrosoftServices")
-	private boolean AllowAdditionalMicrosoftServices;
-
-	@JsonIgnore
-	public boolean getAllowAdditionalMicrosoftServices() {
-		return this.AllowAdditionalMicrosoftServices;
-	}
-
-	public void setAllowAdditionalMicrosoftServices(boolean AllowAdditionalMicrosoftServices) {
-		this.AllowAdditionalMicrosoftServices = AllowAdditionalMicrosoftServices;
 	}
 
 	@JsonProperty("HostName")
@@ -392,18 +274,6 @@ public class FileInfo implements Serializable {
 		this.SignoutUrl = SignoutUrl;
 	}
 
-	@JsonProperty("EditNotificationPostMessage")
-	private boolean EditNotificationPostMessage;
-
-	@JsonIgnore
-	public boolean getEditNotificationPostMessage() {
-		return this.EditNotificationPostMessage;
-	}
-
-	public void setEditNotificationPostMessage(boolean EditNotificationPostMessage) {
-		this.EditNotificationPostMessage = EditNotificationPostMessage;
-	}
-
 	@JsonProperty("SupportsCoauth")
 	private boolean SupportsCoauth;
 
@@ -476,18 +346,6 @@ public class FileInfo implements Serializable {
 		this.CloseButtonClosesWindow = CloseButtonClosesWindow;
 	}
 
-	@JsonProperty("SignInUrl")
-	private String SignInUrl;
-
-	@JsonIgnore
-	public String getSignInUrl() {
-		return this.SignInUrl;
-	}
-
-	public void setSignInUrl(String SignInUrl) {
-		this.SignInUrl = SignInUrl;
-	}
-
 	@JsonProperty("WebEditingDisabled")
 	private boolean WebEditingDisabled;
 
@@ -522,18 +380,6 @@ public class FileInfo implements Serializable {
 
 	public void setHostEditUrl(String HostEditUrl) {
 		this.HostEditUrl = HostEditUrl;
-	}
-
-	@JsonProperty("SupportsFileCreation")
-	private boolean SupportsFileCreation;
-
-	@JsonIgnore
-	public boolean getSupportsFileCreation() {
-		return this.SupportsFileCreation;
-	}
-
-	public void setSupportsFileCreation(boolean SupportsFileCreation) {
-		this.SupportsFileCreation = SupportsFileCreation;
 	}
 
 	@JsonProperty("BreadcrumbFolderName")
@@ -608,18 +454,6 @@ public class FileInfo implements Serializable {
 		this.BaseFileName = BaseFileName;
 	}
 
-	@JsonProperty("UserInfo")
-	private String UserInfo;
-
-	@JsonIgnore
-	public String getUserInfo() {
-		return this.UserInfo;
-	}
-
-	public void setUserInfo(String UserInfo) {
-		this.UserInfo = UserInfo;
-	}
-
 	@JsonProperty("PresenceProvider")
 	private String PresenceProvider;
 
@@ -642,30 +476,6 @@ public class FileInfo implements Serializable {
 
 	public void setUserFriendlyName(String UserFriendlyName) {
 		this.UserFriendlyName = UserFriendlyName;
-	}
-
-	@JsonProperty("EditModePostMessage")
-	private boolean EditModePostMessage;
-
-	@JsonIgnore
-	public boolean getEditModePostMessage() {
-		return this.EditModePostMessage;
-	}
-
-	public void setEditModePostMessage(boolean EditModePostMessage) {
-		this.EditModePostMessage = EditModePostMessage;
-	}
-
-	@JsonProperty("FileNameMaxLength")
-	private String FileNameMaxLength;
-
-	@JsonIgnore
-	public String getFileNameMaxLength() {
-		return this.FileNameMaxLength;
-	}
-
-	public void setFileNameMaxLength(String FileNameMaxLength) {
-		this.FileNameMaxLength = FileNameMaxLength;
 	}
 
 	@JsonProperty("OwnerId")
@@ -692,18 +502,6 @@ public class FileInfo implements Serializable {
 		this.UserCanNotWriteRelative = UserCanNotWriteRelative;
 	}
 
-	@JsonProperty("ClosePostMessage")
-	private boolean ClosePostMessage;
-
-	@JsonIgnore
-	public boolean getClosePostMessage() {
-		return this.ClosePostMessage;
-	}
-
-	public void setClosePostMessage(boolean ClosePostMessage) {
-		this.ClosePostMessage = ClosePostMessage;
-	}
-
 	@JsonProperty("BreadcrumbDocName")
 	private String BreadcrumbDocName;
 
@@ -716,18 +514,6 @@ public class FileInfo implements Serializable {
 		this.BreadcrumbDocName = BreadcrumbDocName;
 	}
 
-	@JsonProperty("SupportedShareUrlTypes")
-	private String[] SupportedShareUrlTypes;
-
-	@JsonIgnore
-	public String[] getSupportedShareUrlTypes() {
-		return this.SupportedShareUrlTypes;
-	}
-
-	public void setSupportedShareUrlTypes(String[] SupportedShareUrlTypes) {
-		this.SupportedShareUrlTypes = SupportedShareUrlTypes;
-	}
-
 	@JsonProperty("HostNotes")
 	private String HostNotes;
 
@@ -738,30 +524,6 @@ public class FileInfo implements Serializable {
 
 	public void setHostNotes(String HostNotes) {
 		this.HostNotes = HostNotes;
-	}
-
-	@JsonProperty("PostMessageOrigin")
-	private String PostMessageOrigin;
-
-	@JsonIgnore
-	public String getPostMessageOrigin() {
-		return this.PostMessageOrigin;
-	}
-
-	public void setPostMessageOrigin(String PostMessageOrigin) {
-		this.PostMessageOrigin = PostMessageOrigin;
-	}
-
-	@JsonProperty("SupportsExtendedLockLength")
-	private boolean SupportsExtendedLockLength;
-
-	@JsonIgnore
-	public boolean getSupportsExtendedLockLength() {
-		return this.SupportsExtendedLockLength;
-	}
-
-	public void setSupportsExtendedLockLength(boolean SupportsExtendedLockLength) {
-		this.SupportsExtendedLockLength = SupportsExtendedLockLength;
 	}
 
 	@JsonProperty("SHA256")
@@ -836,18 +598,6 @@ public class FileInfo implements Serializable {
 		this.UserId = UserId;
 	}
 
-	@JsonProperty("WorkflowType")
-	private String[] WorkflowType;
-
-	@JsonIgnore
-	public String[] getWorkflowType() {
-		return this.WorkflowType;
-	}
-
-	public void setWorkflowType(String[] WorkflowType) {
-		this.WorkflowType = WorkflowType;
-	}
-
 	@JsonProperty("ClientUrl")
 	private String ClientUrl;
 
@@ -918,18 +668,6 @@ public class FileInfo implements Serializable {
 
 	public void setPrivacyUrl(String PrivacyUrl) {
 		this.PrivacyUrl = PrivacyUrl;
-	}
-
-	@JsonProperty("UniqueContentId")
-	private String UniqueContentId;
-
-	@JsonIgnore
-	public String getUniqueContentId() {
-		return this.UniqueContentId;
-	}
-
-	public void setUniqueContentId(String UniqueContentId) {
-		this.UniqueContentId = UniqueContentId;
 	}
 
 }

@@ -21,7 +21,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
@@ -29,9 +28,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sysware.wopiserver.entity.FileInfo;
 import com.sysware.wopiserver.service.ValueService;
 import com.sysware.wopiserver.utils.StringUtil;
@@ -149,8 +148,7 @@ public class WopiHostContrller {
 	 * @throws UnsupportedEncodingException
 	 */
 	@RequestMapping(value = "/files/{fileId}")
-	@ResponseBody
-	public String getFileInfo(@PathVariable(value = "fileId") String fileId, HttpServletRequest request,
+	public void getFileInfo(@PathVariable(value = "fileId") String fileId, HttpServletRequest request,
 			HttpServletResponse response) {
 		String access_token = request.getParameter("access_token");
 		JSONObject token = null;
@@ -165,7 +163,7 @@ public class WopiHostContrller {
 
 		if (token == null) {
 			response.setStatus(HttpStatus.SC_UNAUTHORIZED);
-			return null;
+			return;
 		}
 
 		JSONObject fileInfo = valueService.getFileInfo(fileId);
@@ -176,42 +174,46 @@ public class WopiHostContrller {
 
 		if (file == null || !file.exists()) {
 			response.setStatus(HttpStatus.SC_NOT_FOUND);
-			return null;
+			return;
 		}
 
 		file = StringUtil.getLastestFile(file);
 
 		FileInfo info = new FileInfo();
-		info.setUserFriendlyName(token.getString("userName"));
-		// 取得文件名
 		info.setBaseFileName(fileInfo.getString("fileName"));
-		info.setSize(file.length());
-		info.setFileExtension(FilenameUtils.getExtension(info.getBaseFileName()));
-		info.setOwnerId(token.getString("userId"));
-		info.setUserId(token.getString("userId"));
-		info.setVersion("" + file.lastModified());
-		info.setSHA256(getHash256(file));
-		info.setAllowExternalMarketplace(true);
-		// 显示下载按钮
-		info.setDownloadUrl(StringUtil.BASE_PATH + "wopi/files/" + fileId + "/contents");
-		if (canedit) {
-			info.setUserCanWrite(true);
-			info.setSupportsUpdate(true);
-			info.setSupportsLocks(true);
-			info.setSupportsCoauth(true);
-			info.setSupportsCobalt(true);
-			info.setSupportsFolders(true);
-		} else {
-			info.setReadOnly(true);
+		info.setUserFriendlyName(token.getString("userName")); // 取得文件名
+		if (file.exists()) {
+			// 取得文件名
+			info.setBaseFileName("测试文档-" + file.getName());
+			info.setSize(file.length());
+			info.setOwnerId(token.getString("userId"));
+			info.setVersion(file.lastModified());
+			info.setSHA256(getHash256(file));
+			if (canedit) {
+				info.setUserCanWrite(true);
+				info.setSupportsUpdate(true);
+				info.setSupportsLocks(true);
+				info.setSupportsFolders(true);
+				// 显示下载按钮
+				info.setDownloadUrl(StringUtil.BASE_PATH + "wopi/files/" + fileId + "/contents");
+			} else {
+				info.setReadOnly(true);
+				info.setAllowExternalMarketplace(true);
+			}
+
 		}
 
 		try {
 			ObjectMapper mapper = new ObjectMapper();
-			return mapper.writeValueAsString(info);
+			String Json = mapper.writeValueAsString(info);
+			// 中文文件名称设置编码
+			response.setHeader("Content-type", "text/html;charset=UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			System.out.println(Json);
+			response.getWriter().write(Json);
 		} catch (IOException e) {
 			e.printStackTrace();
 			response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-			return null;
 		}
 	}
 
